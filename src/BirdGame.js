@@ -4,6 +4,7 @@ import { Container } from 'react-grid-system';
 import aveAzul from "./images/aveAzul.png";
 import aveRosa from "./images/aveRosa.png";
 import Card from './Card';
+import { useState, useEffect } from "react"
 
 
 function App() {
@@ -24,6 +25,24 @@ function App() {
     );
   });
 
+  // Tiempo restante
+  const [seconds, setSeconds] = useState(0);
+  
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setSeconds((prevSeconds) => prevSeconds + 1);
+      }, 1000);
+  
+      return () => clearInterval(interval);
+    }, []);
+  
+    useEffect(() => {
+      if (seconds === 60) {
+        window.location.reload();
+      }
+    }, [seconds]);
+
+
   return (
     <>
     <header className="score-box">
@@ -39,7 +58,7 @@ function App() {
 
 			<div>
 				<p>Tiempo restante</p>
-				<p>10 min</p>
+				<p>{seconds}</p>
 			</div>
 		</header>
 
